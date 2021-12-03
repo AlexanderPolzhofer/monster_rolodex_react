@@ -7,7 +7,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      monsters: []
+      monsters: [],
+      searchField: ""
     }
   }
 
@@ -20,10 +21,17 @@ class App extends React.Component {
   }
 
   render() {
+
+    const { monsters, searchField } = this.state;
+    const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()));
+
     return (
       <div className="App">
         <h1>MONSTER ROLODEX</h1>
-        <CardList monsters={this.state.monsters} />
+        <div className="input-field">
+          <input type="search" placeholder="search monsters" onChange={e => this.setState({ searchField: e.target.value })} />
+        </div>
+        <CardList monsters={filteredMonsters} />
       </div >
     );
   }
